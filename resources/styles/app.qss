@@ -1,0 +1,121 @@
+QWidget {
+  font-family: "Segoe UI", "Arial", sans-serif;
+  font-size: 12px;
+  color: #303030;
+  background-color: #d3d3d3;
+}
+
+QMainWindow {
+  background-color: #d3d3d3;
+}
+
+QMenuBar {
+  background-color: #3d3f3e;
+  color: #f0f0f0;
+}
+
+QMenuBar::item:selected {
+  background: #6a8347;
+}
+
+QMenu {
+  background-color: #3e403f;
+  color: #f0f0f0;
+  border: 1px solid #111111;
+}
+
+QMenu::item:selected {
+  background-color: #6a8347;
+  color: #ffffff;
+}
+
+QToolBar {
+  background-color: #3d3f3e;
+  border: none;
+  spacing: 6px;
+  padding: 4px;
+}
+
+QToolButton {
+  color: #f0f0f0;
+  background: #3e403f;
+  border: 1px solid #111111;
+  border-radius: 3px;
+  padding: 4px 10px;
+}
+
+QToolButton:checked,
+QToolButton:hover {
+  background: #6a8347;
+  color: #ffffff;
+}
+
+QStatusBar {
+  background-color: #bfbeb5;
+  color: #303030;
+  border-top: 1px solid #7d7d79;
+}
+
+QLabel {
+  background: transparent;
+}
+
+QStackedWidget {
+  background-color: #d3d3d3;
+}
+
+QWidget#buttonBar {
+  background-color: #3d3f3e;
+  border-bottom: 1px solid #7d7d79;
+}
+
+QWidget#flashWidget {
+  background-color: #d3d3d3;
+}
+
+QGroupBox#flashCommonBox,
+QGroupBox#flashIndividualBox {
+  border: 1px solid #6a8347;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding-top: 12px;
+  background-color: #f4f4f4;
+}
+
+QGroupBox#flashCommonBox::title,
+QGroupBox#flashIndividualBox::title {
+  subcontrol-origin: margin;
+  left: 8px;
+  padding: 0 4px;
+  color: #303030;
+}
+
+QListWidget {
+  border: 1px solid #bfbeb5;
+  background-color: #ffffff;
+}
+
+QLabel#homeTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #303030;
+}
+
+QLabel#homeSectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #303030;
+}
+
+QPushButton {
+  color: #f0f0f0;
+  background: #3e403f;
+  border: 1px solid #111111;
+  border-radius: 3px;
+  padding: 6px 12px;
+}
+
+QPushButton:hover {
+  background: #6a8347;
+  color: #ffffff;
+}

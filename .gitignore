@@ -1,0 +1,56 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+compile_commands.json
+install_manifest.txt
+
+# Qt/CMake autogen artifacts
+*_autogen/
+.qmake.stash
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# Test and coverage artifacts
+Testing/
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# Binaries and libraries
+*.exe
+*.app
+*.dll
+*.so
+*.so.*
+*.dylib
+*.a
+*.lib
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Qt Creator / IDE files
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.creator
+*.creator.user
+*.creator.user.*
+
+# VS Code
+.vscode/

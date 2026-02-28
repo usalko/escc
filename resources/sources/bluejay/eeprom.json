@@ -1,0 +1,12 @@
+{
+  "LAYOUT_SIZE": 255,
+  "LAYOUT": {
+    "MAIN_REVISION": { "offset": 0, "size": 1 },
+    "SUB_REVISION": { "offset": 1, "size": 1 },
+    "LAYOUT_REVISION": { "offset": 2, "size": 1 },
+    "MODE": { "offset": 13, "size": 2 },
+    "PWM_FREQUENCY": { "offset": 10, "size": 1 },
+    "NAME": { "offset": 96, "size": 16 },
+    "STARTUP_MELODY": { "offset": 112, "size": 128 }
+  }
+}

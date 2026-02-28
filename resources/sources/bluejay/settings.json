@@ -1,0 +1,28 @@
+{
+  "COMMON": {
+    "200": {
+      "base": [
+        { "name": "RPM_POWER_SLOPE", "type": "enum" },
+        { "name": "STARTUP_POWER_MIN", "type": "number", "min": 1000, "max": 1125 },
+        { "name": "TEMPERATURE_PROTECTION", "type": "enum", "group": "bluejaySafety" },
+        { "name": "BRAKE_ON_STOP", "type": "bool", "group": "bluejayBrake" },
+        { "name": "PWM_FREQUENCY", "type": "enum" }
+      ]
+    }
+  },
+  "INDIVIDUAL": {
+    "200": {
+      "base": [
+        { "name": "MOTOR_DIRECTION", "type": "bool" },
+        { "name": "LED_CONTROL", "type": "bool" }
+      ]
+    }
+  },
+  "DEFAULTS": {
+    "200": {
+      "MOTOR_DIRECTION": 0,
+      "TEMPERATURE_PROTECTION": 1,
+      "BRAKE_ON_STOP": 0
+    }
+  }
+}

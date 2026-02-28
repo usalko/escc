@@ -1,0 +1,25 @@
+{
+  "COMMON": {
+    "33": {
+      "base": [
+        { "name": "COMMUTATION_TIMING", "type": "enum" },
+        { "name": "DEMAG_COMPENSATION", "type": "enum" },
+        { "name": "MOTOR_DIRECTION", "type": "bool" }
+      ]
+    }
+  },
+  "INDIVIDUAL": {
+    "33": {
+      "base": [
+        { "name": "MOTOR_DIRECTION", "type": "bool" },
+        { "name": "BIDIRECTIONAL_MODE", "type": "bool" }
+      ]
+    }
+  },
+  "DEFAULTS": {
+    "33": {
+      "MOTOR_DIRECTION": 0,
+      "BIDIRECTIONAL_MODE": 0
+    }
+  }
+}

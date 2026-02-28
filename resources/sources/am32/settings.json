@@ -1,0 +1,27 @@
+{
+  "COMMON": {
+    "0": {
+      "base": [
+        { "name": "SINUSOIDAL_STARTUP", "type": "bool", "group": "am32sine" },
+        { "name": "COMPLEMENTARY_PWM", "type": "bool", "group": "am32pwm" },
+        { "name": "PWM_FREQUENCY", "type": "number", "min": 24, "max": 48, "step": 1 }
+      ]
+    }
+  },
+  "INDIVIDUAL": {
+    "0": {
+      "base": [
+        { "name": "MOTOR_DIRECTION", "type": "bool" },
+        { "name": "BIDIRECTIONAL_MODE", "type": "bool" }
+      ]
+    }
+  },
+  "DEFAULTS": {
+    "0": {
+      "MOTOR_DIRECTION": 0,
+      "BIDIRECTIONAL_MODE": 0,
+      "COMPLEMENTARY_PWM": 1,
+      "PWM_FREQUENCY": 24
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "LAYOUT_SIZE": 176,
+  "NAMES": [""],
+  "RESET_DELAY": 5000,
+  "BOOT_LOADER_OFFSET": 192,
+  "BOOT_LOADER_SIZE": 1,
+  "BOOT_LOADER_PINS": {
+    "PA2": 2,
+    "PB4": 20,
+    "PA6": 6
+  },
+  "LAYOUT": {
+    "MAIN_REVISION": { "offset": 3, "size": 1 },
+    "SUB_REVISION": { "offset": 4, "size": 1 },
+    "LAYOUT_REVISION": { "offset": 1, "size": 1 },
+    "NAME": { "offset": 5, "size": 12 },
+    "MOTOR_DIRECTION": { "offset": 17, "size": 1 },
+    "PWM_FREQUENCY": { "offset": 24, "size": 1 },
+    "STARTUP_MELODY": { "offset": 48, "size": 128 }
+  }
+}

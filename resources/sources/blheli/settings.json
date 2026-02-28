@@ -1,0 +1,25 @@
+{
+  "COMMON": {
+    "33": {
+      "base": [
+        { "name": "COMMUTATION_TIMING", "type": "enum" },
+        { "name": "DEMAG_COMPENSATION", "type": "enum" },
+        { "name": "MOTOR_DIRECTION", "type": "bool" }
+      ]
+    }
+  },
+  "INDIVIDUAL": {
+    "33": {
+      "base": [
+        { "name": "LED_CONTROL", "type": "bool" },
+        { "name": "PPM_CENTER_THROTTLE", "type": "number" }
+      ]
+    }
+  },
+  "DEFAULTS": {
+    "33": {
+      "COMMUTATION_TIMING": 3,
+      "DEMAG_COMPENSATION": 2
+    }
+  }
+}
