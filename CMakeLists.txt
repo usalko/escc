@@ -31,6 +31,7 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network Test)
 find_package(Qt6 QUIET COMPONENTS LinguistTools)
 find_package(Qt6 QUIET COMPONENTS SerialPort)
+find_package(Qt6 QUIET COMPONENTS Multimedia)
 
 qt_standard_project_setup()
 
@@ -40,9 +41,23 @@ set(ESCC_SOURCES
   src/ui/MainWindow.cpp
   src/ui/HomeWidget.cpp
   src/ui/ButtonBarWidget.cpp
+  src/ui/AppSettingsDialog.cpp
+  src/ui/ChangelogDialog.cpp
   src/ui/FlashWidget.cpp
   src/ui/CommonSettingsWidget.cpp
+  src/ui/EscWidget.cpp
+  src/ui/FirmwareSelectorDialog.cpp
+  src/ui/LogWidget.cpp
+  src/ui/MelodyEditorWidget.cpp
+  src/ui/MotorControlWidget.cpp
+  src/ui/OverlayWidget.cpp
   src/ui/PortPickerWidget.cpp
+  src/ui/StatusBarWidget.cpp
+  src/ui/Input/LabeledSelect.cpp
+  src/ui/Input/Checkbox.cpp
+  src/ui/Input/Number.cpp
+  src/ui/Input/Slider.cpp
+  src/ui/Input/Info.cpp
   src/serial/SerialPort.cpp
   src/serial/QueueProcessor.cpp
   src/serial/Serial.cpp
@@ -76,9 +91,23 @@ set(ESCC_HEADERS
   src/ui/MainWindow.hpp
   src/ui/HomeWidget.hpp
   src/ui/ButtonBarWidget.hpp
+  src/ui/AppSettingsDialog.hpp
+  src/ui/ChangelogDialog.hpp
   src/ui/FlashWidget.hpp
   src/ui/CommonSettingsWidget.hpp
+  src/ui/EscWidget.hpp
+  src/ui/FirmwareSelectorDialog.hpp
+  src/ui/LogWidget.hpp
+  src/ui/MelodyEditorWidget.hpp
+  src/ui/MotorControlWidget.hpp
+  src/ui/OverlayWidget.hpp
   src/ui/PortPickerWidget.hpp
+  src/ui/StatusBarWidget.hpp
+  src/ui/Input/LabeledSelect.hpp
+  src/ui/Input/Checkbox.hpp
+  src/ui/Input/Number.hpp
+  src/ui/Input/Slider.hpp
+  src/ui/Input/Info.hpp
   src/serial/SerialPort.hpp
   src/serial/QueueProcessor.hpp
   src/serial/Serial.hpp
@@ -128,6 +157,13 @@ if(TARGET Qt6::SerialPort)
   target_compile_definitions(escc PRIVATE ESCC_HAS_QT_SERIALPORT=1)
 else()
   message(WARNING "Qt6 SerialPort component not found. Building without hardware serial support.")
+endif()
+
+if(TARGET Qt6::Multimedia)
+  target_link_libraries(escc PRIVATE Qt6::Multimedia)
+  target_compile_definitions(escc PRIVATE ESCC_HAS_QT_MULTIMEDIA=1)
+else()
+  message(WARNING "Qt6 Multimedia component not found. Melody preview will be disabled.")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")

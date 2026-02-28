@@ -1,62 +1,66 @@
 #include "CommonSettingsWidget.hpp"
 
-#include <QCheckBox>
-#include <QComboBox>
-#include <QFormLayout>
+#include "Input/Checkbox.hpp"
+#include "Input/Info.hpp"
+#include "Input/LabeledSelect.hpp"
+#include "Input/Number.hpp"
+#include "Input/Slider.hpp"
+
 #include <QGroupBox>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QSlider>
 #include <QVBoxLayout>
 
 CommonSettingsWidget::CommonSettingsWidget(QWidget* parent)
-    : QWidget(parent), startupPowerValueLabel_(new QLabel(this)) {
+    : QWidget(parent) {
   auto* root = new QVBoxLayout(this);
   root->setContentsMargins(0, 0, 0, 0);
   root->setSpacing(10);
 
+  auto* info = new Info(
+      tr("These common settings apply to all connected ESCs. Individual overrides can be set per ESC card."),
+      this);
+
   auto* generalGroup = new QGroupBox(tr("General"), this);
-  auto* generalForm = new QFormLayout(generalGroup);
+  auto* generalLayout = new QVBoxLayout(generalGroup);
+  generalLayout->setSpacing(8);
 
-  auto* pwmFrequency = new QComboBox(generalGroup);
-  pwmFrequency->addItem(QStringLiteral("24 kHz"), 24);
-  pwmFrequency->addItem(QStringLiteral("48 kHz"), 48);
-  pwmFrequency->addItem(QStringLiteral("96 kHz"), 96);
-  pwmFrequency->setCurrentIndex(1);
+  auto* pwmFrequency = new LabeledSelect(tr("PWM Frequency"), generalGroup);
+  pwmFrequency->addOption(QStringLiteral("24 kHz"), 24);
+  pwmFrequency->addOption(QStringLiteral("48 kHz"), 48);
+  pwmFrequency->addOption(QStringLiteral("96 kHz"), 96);
+  pwmFrequency->setValue(48);
 
-  auto* motorDirection = new QComboBox(generalGroup);
-  motorDirection->addItem(tr("Normal"), 0);
-  motorDirection->addItem(tr("Reversed"), 1);
+  auto* motorDirection = new LabeledSelect(tr("Motor Direction"), generalGroup);
+  motorDirection->addOption(tr("Normal"), 0);
+  motorDirection->addOption(tr("Reversed"), 1);
+  motorDirection->setValue(0);
 
-  generalForm->addRow(tr("PWM Frequency"), pwmFrequency);
-  generalForm->addRow(tr("Motor Direction"), motorDirection);
+  generalLayout->addWidget(pwmFrequency);
+  generalLayout->addWidget(motorDirection);
 
   auto* startupGroup = new QGroupBox(tr("Startup"), this);
   auto* startupLayout = new QVBoxLayout(startupGroup);
 
-  auto* startupRow = new QHBoxLayout();
-  auto* startupPower = new QSlider(Qt::Horizontal, startupGroup);
+  auto* startupPower = new Slider(tr("Startup Power"), startupGroup);
   startupPower->setRange(1, 15);
   startupPower->setValue(8);
 
-  startupPowerValueLabel_->setText(sliderValueText(startupPower->value()));
-  startupPowerValueLabel_->setMinimumWidth(32);
+  auto* beaconDelay = new Number(tr("Beacon Delay (s)"), startupGroup);
+  beaconDelay->setRange(1, 120);
+  beaconDelay->setValue(10);
 
-  startupRow->addWidget(startupPower, 1);
-  startupRow->addWidget(startupPowerValueLabel_);
-
-  startupLayout->addWidget(new QLabel(tr("Startup Power"), startupGroup));
-  startupLayout->addLayout(startupRow);
+  startupLayout->addWidget(startupPower);
+  startupLayout->addWidget(beaconDelay);
 
   auto* safetyGroup = new QGroupBox(tr("Safety"), this);
   auto* safetyLayout = new QVBoxLayout(safetyGroup);
 
-  auto* beaconEnabled = new QCheckBox(tr("Beacon enabled"), safetyGroup);
+  auto* beaconEnabled = new Checkbox(tr("Beacon enabled"), safetyGroup);
   beaconEnabled->setChecked(true);
 
-  auto* temperatureProtection = new QCheckBox(tr("Temperature protection"), safetyGroup);
+  auto* temperatureProtection = new Checkbox(tr("Temperature protection"), safetyGroup);
   temperatureProtection->setChecked(true);
 
+  root->addWidget(info);
   safetyLayout->addWidget(beaconEnabled);
   safetyLayout->addWidget(temperatureProtection);
 
@@ -64,12 +68,4 @@ CommonSettingsWidget::CommonSettingsWidget(QWidget* parent)
   root->addWidget(startupGroup);
   root->addWidget(safetyGroup);
   root->addStretch(1);
-
-  connect(startupPower, &QSlider::valueChanged, this, [this](int value) {
-    startupPowerValueLabel_->setText(sliderValueText(value));
-  });
-}
-
-QString CommonSettingsWidget::sliderValueText(int value) {
-  return QString::number(value);
 }

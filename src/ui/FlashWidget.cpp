@@ -1,11 +1,13 @@
 #include "FlashWidget.hpp"
 
 #include "CommonSettingsWidget.hpp"
+#include "EscWidget.hpp"
 
+#include <QFrame>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QListWidget>
+#include <QScrollArea>
 #include <QVBoxLayout>
 
 FlashWidget::FlashWidget(QWidget* parent) : QWidget(parent) {
@@ -34,13 +36,23 @@ FlashWidget::FlashWidget(QWidget* parent) : QWidget(parent) {
   auto* individualBox = new QGroupBox(tr("Individual ESCs"), wrapper);
   individualBox->setObjectName(QStringLiteral("flashIndividualBox"));
   auto* individualLayout = new QVBoxLayout(individualBox);
-  individualLayout->addWidget(new QLabel(tr("Per-ESC cards will be added in 4.5.3."), individualBox));
+  auto* cardsContainer = new QWidget(individualBox);
+  auto* cardsLayout = new QVBoxLayout(cardsContainer);
+  cardsLayout->setContentsMargins(0, 0, 0, 0);
+  cardsLayout->setSpacing(10);
 
-  auto* escList = new QListWidget(individualBox);
-  escList->addItem(tr("ESC #1 — not loaded"));
-  escList->addItem(tr("ESC #2 — not loaded"));
-  escList->addItem(tr("ESC #3 — not loaded"));
-  individualLayout->addWidget(escList, 1);
+  for (int i = 0; i < 3; ++i) {
+    auto* escWidget = new EscWidget(i, cardsContainer);
+    escWidget->setDisplayName(tr("Not loaded"));
+    cardsLayout->addWidget(escWidget);
+  }
+  cardsLayout->addStretch(1);
+
+  auto* scroll = new QScrollArea(individualBox);
+  scroll->setWidgetResizable(true);
+  scroll->setFrameShape(QFrame::NoFrame);
+  scroll->setWidget(cardsContainer);
+  individualLayout->addWidget(scroll, 1);
 
   columns->addWidget(commonBox, 1);
   columns->addWidget(individualBox, 1);

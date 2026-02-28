@@ -2,4 +2,9 @@
   <qresource prefix="/styles">
     <file>styles/app.qss</file>
   </qresource>
+  <qresource prefix="/data">
+    <file alias="changelog.json">../../src/changelog.json</file>
+    <file alias="melodies.json">../../src/melodies.json</file>
+    <file alias="settings.json">../../src/settings.json</file>
+  </qresource>
 </RCC>

@@ -56,6 +56,12 @@ QStatusBar {
   border-top: 1px solid #7d7d79;
 }
 
+QWidget#statusBarWidget QLabel {
+  border-right: 1px solid #7d7d79;
+  padding-right: 8px;
+  margin-right: 8px;
+}
+
 QLabel {
   background: transparent;
 }
@@ -71,6 +77,35 @@ QWidget#buttonBar {
 
 QWidget#flashWidget {
   background-color: #d3d3d3;
+}
+
+QWidget#motorControlWidget {
+  background-color: #d3d3d3;
+}
+
+QWidget#motorControlWidget QGroupBox {
+  border: 1px solid #6a8347;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding-top: 12px;
+  background-color: #f4f4f4;
+}
+
+QWidget#motorControlWidget QGroupBox::title {
+  subcontrol-origin: margin;
+  left: 8px;
+  padding: 0 4px;
+  color: #303030;
+}
+
+QWidget#overlayWidget {
+  background-color: rgba(61, 63, 62, 130);
+}
+
+QWidget#overlayPanel {
+  background-color: #f4f4f4;
+  border: 1px solid #6a8347;
+  border-radius: 4px;
 }
 
 QGroupBox#flashCommonBox,
@@ -93,6 +128,27 @@ QGroupBox#flashIndividualBox::title {
 QListWidget {
   border: 1px solid #bfbeb5;
   background-color: #ffffff;
+}
+
+QWidget#escWidget {
+  background-color: #ffffff;
+  border: 1px solid #bfbeb5;
+  border-radius: 4px;
+}
+
+QLabel#escWidgetTitle {
+  font-weight: 600;
+  color: #303030;
+}
+
+QWidget#infoWidget {
+  background-color: #f8f8f8;
+  border: 1px solid #bfbeb5;
+  border-radius: 4px;
+}
+
+QDialog#firmwareSelectorDialog {
+  background-color: #d3d3d3;
 }
 
 QLabel#homeTitle {
