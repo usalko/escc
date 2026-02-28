@@ -6,6 +6,7 @@
 #include "FlashWidget.hpp"
 #include "FirmwareSelectorDialog.hpp"
 #include "HomeWidget.hpp"
+#include "i18n/LanguageManager.hpp"
 #include "LogWidget.hpp"
 #include "MelodyEditorWidget.hpp"
 #include "MotorControlWidget.hpp"
@@ -35,6 +36,14 @@ MainWindow::MainWindow(QWidget* parent)
       logWidget_(new LogWidget(this)),
       overlayWidget_(new OverlayWidget(centralContainer_)),
       statusWidget_(new StatusBarWidget(this)),
+      fileMenu_(nullptr),
+      viewMenu_(nullptr),
+      helpMenu_(nullptr),
+      mainToolBar_(nullptr),
+      quitAction_(nullptr),
+      appSettingsAction_(nullptr),
+      changelogAction_(nullptr),
+      aboutAction_(nullptr),
       showHomeAction_(new QAction(tr("Home"), this)),
       showFlashAction_(new QAction(tr("Flash"), this)),
       showMelodyEditorAction_(new QAction(tr("Melody Editor"), this)),
@@ -135,24 +144,24 @@ MainWindow::MainWindow(QWidget* parent)
     statusWidget_->incrementPacketErrors(1);
   });
 
-  auto* fileMenu = menuBar()->addMenu(tr("&File"));
-  auto* quitAction = fileMenu->addAction(tr("Quit"));
-  connect(quitAction, &QAction::triggered, this, &MainWindow::close);
+  fileMenu_ = menuBar()->addMenu(tr("&File"));
+  quitAction_ = fileMenu_->addAction(tr("Quit"));
+  connect(quitAction_, &QAction::triggered, this, &MainWindow::close);
 
-  auto* viewMenu = menuBar()->addMenu(tr("&View"));
-  viewMenu->addAction(showHomeAction_);
-  viewMenu->addAction(showFlashAction_);
-  viewMenu->addAction(showMelodyEditorAction_);
-  viewMenu->addAction(showMotorControlAction_);
-  viewMenu->addAction(showLogAction_);
+  viewMenu_ = menuBar()->addMenu(tr("&View"));
+  viewMenu_->addAction(showHomeAction_);
+  viewMenu_->addAction(showFlashAction_);
+  viewMenu_->addAction(showMelodyEditorAction_);
+  viewMenu_->addAction(showMotorControlAction_);
+  viewMenu_->addAction(showLogAction_);
 
-  auto* helpMenu = menuBar()->addMenu(tr("&Help"));
-  auto* appSettingsAction = helpMenu->addAction(tr("App Settings"));
-  auto* changelogAction = helpMenu->addAction(tr("Changelog"));
-  auto* aboutAction = helpMenu->addAction(tr("About"));
-  connect(appSettingsAction, &QAction::triggered, this, &MainWindow::showAppSettingsDialog);
-  connect(changelogAction, &QAction::triggered, this, &MainWindow::showChangelogDialog);
-  connect(aboutAction, &QAction::triggered, this, [this]() {
+  helpMenu_ = menuBar()->addMenu(tr("&Help"));
+  appSettingsAction_ = helpMenu_->addAction(tr("App Settings"));
+  changelogAction_ = helpMenu_->addAction(tr("Changelog"));
+  aboutAction_ = helpMenu_->addAction(tr("About"));
+  connect(appSettingsAction_, &QAction::triggered, this, &MainWindow::showAppSettingsDialog);
+  connect(changelogAction_, &QAction::triggered, this, &MainWindow::showChangelogDialog);
+  connect(aboutAction_, &QAction::triggered, this, [this]() {
     statusBar()->showMessage(tr("ESC Configurator C++ migration UI scaffold"), 3000);
   });
 
@@ -170,13 +179,13 @@ MainWindow::MainWindow(QWidget* parent)
   screensGroup->addAction(showLogAction_);
   showHomeAction_->setChecked(true);
 
-  auto* toolbar = addToolBar(tr("Main"));
-  toolbar->setMovable(false);
-  toolbar->addAction(showHomeAction_);
-  toolbar->addAction(showFlashAction_);
-  toolbar->addAction(showMelodyEditorAction_);
-  toolbar->addAction(showMotorControlAction_);
-  toolbar->addAction(showLogAction_);
+  mainToolBar_ = addToolBar(tr("Main"));
+  mainToolBar_->setMovable(false);
+  mainToolBar_->addAction(showHomeAction_);
+  mainToolBar_->addAction(showFlashAction_);
+  mainToolBar_->addAction(showMelodyEditorAction_);
+  mainToolBar_->addAction(showMotorControlAction_);
+  mainToolBar_->addAction(showLogAction_);
 
   connect(showHomeAction_, &QAction::triggered, this, &MainWindow::showHomeScreen);
   connect(showFlashAction_, &QAction::triggered, this, &MainWindow::showFlashScreen);
@@ -186,6 +195,9 @@ MainWindow::MainWindow(QWidget* parent)
 
   statusBar()->showMessage(tr("Ready"));
   statusBar()->addPermanentWidget(statusWidget_, 1);
+
+  connect(&LanguageManager::instance(), &LanguageManager::languageChanged, this,
+          &MainWindow::onLanguageChanged);
 }
 
 void MainWindow::showHomeScreen() {
@@ -226,6 +238,47 @@ void MainWindow::showAppSettingsDialog() {
   } else {
     statusBar()->showMessage(tr("Application settings canceled"), 1500);
   }
+}
+
+void MainWindow::onLanguageChanged() {
+  retranslateUiTexts();
+  statusBar()->showMessage(tr("Language changed"), 2000);
+}
+
+void MainWindow::retranslateUiTexts() {
+  setWindowTitle(tr("ESC Configurator C++"));
+
+  if (fileMenu_ != nullptr) {
+    fileMenu_->setTitle(tr("&File"));
+  }
+  if (viewMenu_ != nullptr) {
+    viewMenu_->setTitle(tr("&View"));
+  }
+  if (helpMenu_ != nullptr) {
+    helpMenu_->setTitle(tr("&Help"));
+  }
+  if (mainToolBar_ != nullptr) {
+    mainToolBar_->setWindowTitle(tr("Main"));
+  }
+
+  if (quitAction_ != nullptr) {
+    quitAction_->setText(tr("Quit"));
+  }
+  if (appSettingsAction_ != nullptr) {
+    appSettingsAction_->setText(tr("App Settings"));
+  }
+  if (changelogAction_ != nullptr) {
+    changelogAction_->setText(tr("Changelog"));
+  }
+  if (aboutAction_ != nullptr) {
+    aboutAction_->setText(tr("About"));
+  }
+
+  showHomeAction_->setText(tr("Home"));
+  showFlashAction_->setText(tr("Flash"));
+  showMelodyEditorAction_->setText(tr("Melody Editor"));
+  showMotorControlAction_->setText(tr("Motor Control"));
+  showLogAction_->setText(tr("Log"));
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event) {

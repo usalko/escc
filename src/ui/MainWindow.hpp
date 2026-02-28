@@ -5,7 +5,9 @@
 #include <QString>
 
 class QResizeEvent;
+class QMenu;
 class QStackedWidget;
+class QToolBar;
 class HomeWidget;
 class ButtonBarWidget;
 class FlashWidget;
@@ -32,8 +34,11 @@ class MainWindow final : public QMainWindow {
   void showLogScreen();
   void showChangelogDialog();
   void showAppSettingsDialog();
+  void onLanguageChanged();
 
  private:
+  void retranslateUiTexts();
+
   QWidget* centralContainer_;
   ButtonBarWidget* buttonBarWidget_;
   QStackedWidget* stackedWidget_;
@@ -44,6 +49,14 @@ class MainWindow final : public QMainWindow {
   LogWidget* logWidget_;
   OverlayWidget* overlayWidget_;
   StatusBarWidget* statusWidget_;
+  QMenu* fileMenu_;
+  QMenu* viewMenu_;
+  QMenu* helpMenu_;
+  QToolBar* mainToolBar_;
+  QAction* quitAction_;
+  QAction* appSettingsAction_;
+  QAction* changelogAction_;
+  QAction* aboutAction_;
   QAction* showHomeAction_;
   QAction* showFlashAction_;
   QAction* showMelodyEditorAction_;

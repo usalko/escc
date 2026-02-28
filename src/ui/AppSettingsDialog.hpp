@@ -5,6 +5,7 @@
 #include <QVector>
 
 class QCheckBox;
+class QComboBox;
 
 class AppSettingsDialog final : public QDialog {
   Q_OBJECT
@@ -13,6 +14,7 @@ class AppSettingsDialog final : public QDialog {
   explicit AppSettingsDialog(QWidget* parent = nullptr);
 
   bool settingValue(const QString& key) const;
+  QString selectedLanguage() const;
 
  private slots:
   void accept() override;
@@ -32,4 +34,5 @@ class AppSettingsDialog final : public QDialog {
   void savePersistedValues() const;
 
   QVector<BooleanSetting> settings_;
+  QComboBox* languageCombo_{nullptr};
 };

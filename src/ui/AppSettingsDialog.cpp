@@ -1,6 +1,9 @@
 #include "AppSettingsDialog.hpp"
 
+#include "i18n/LanguageManager.hpp"
+
 #include <QCheckBox>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QFormLayout>
@@ -34,6 +37,12 @@ AppSettingsDialog::AppSettingsDialog(QWidget* parent) : QDialog(parent) {
   settingsLayout->setHorizontalSpacing(16);
   settingsLayout->setVerticalSpacing(10);
 
+  languageCombo_ = new QComboBox(settingsContainer);
+  for (const auto& option : LanguageManager::instance().availableLanguages()) {
+    languageCombo_->addItem(option.label, option.code);
+  }
+  settingsLayout->addRow(tr("Language"), languageCombo_);
+
   loadDefaults();
   for (auto& setting : settings_) {
     setting.checkBox = new QCheckBox(settingsContainer);
@@ -63,8 +72,17 @@ bool AppSettingsDialog::settingValue(const QString& key) const {
   return false;
 }
 
+QString AppSettingsDialog::selectedLanguage() const {
+  if (languageCombo_ == nullptr) {
+    return QStringLiteral("en");
+  }
+
+  return languageCombo_->currentData().toString();
+}
+
 void AppSettingsDialog::accept() {
   savePersistedValues();
+  LanguageManager::instance().setLanguage(selectedLanguage());
   QDialog::accept();
 }
 
@@ -110,6 +128,15 @@ void AppSettingsDialog::loadDefaults() {
 
 void AppSettingsDialog::loadPersistedValues() {
   QSettings appSettings;
+
+  if (languageCombo_ != nullptr) {
+    const QString currentLanguage = LanguageManager::instance().currentLanguage();
+    const int languageIndex = languageCombo_->findData(currentLanguage);
+    if (languageIndex >= 0) {
+      languageCombo_->setCurrentIndex(languageIndex);
+    }
+  }
+
   for (auto& setting : settings_) {
     if (setting.checkBox == nullptr) {
       continue;

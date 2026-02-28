@@ -33,6 +33,21 @@ find_package(Qt6 QUIET COMPONENTS LinguistTools)
 find_package(Qt6 QUIET COMPONENTS SerialPort)
 find_package(Qt6 QUIET COMPONENTS Multimedia)
 
+set(ESCC_TRANSLATION_TS_FILES
+  src/i18n/escc_cs.ts
+  src/i18n/escc_de.ts
+  src/i18n/escc_en.ts
+  src/i18n/escc_es.ts
+  src/i18n/escc_fr.ts
+  src/i18n/escc_it.ts
+  src/i18n/escc_pl.ts
+  src/i18n/escc_ru.ts
+  src/i18n/escc_tr.ts
+  src/i18n/escc_uk.ts
+  src/i18n/escc_zh_cn.ts
+  src/i18n/escc_zh_tw.ts
+)
+
 qt_standard_project_setup()
 
 set(ESCC_SOURCES
@@ -80,6 +95,7 @@ set(ESCC_SOURCES
   src/models/AppState.cpp
   src/models/EscListModel.cpp
   src/models/SettingsModel.cpp
+  src/i18n/LanguageManager.cpp
   src/utils/Convert.cpp
   src/utils/Flash.cpp
   src/utils/Settings.cpp
@@ -131,6 +147,7 @@ set(ESCC_HEADERS
   src/models/EscListModel.hpp
   src/models/SettingsModel.hpp
   src/models/Types.hpp
+  src/i18n/LanguageManager.hpp
   src/utils/Convert.hpp
   src/utils/Flash.hpp
   src/utils/Settings.hpp
@@ -168,6 +185,14 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(escc PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(COMMAND qt_add_translations)
+  qt_add_translations(escc TS_FILES ${ESCC_TRANSLATION_TS_FILES})
+elseif(TARGET Qt6::LinguistTools)
+  message(WARNING "Qt LinguistTools found but qt_add_translations() is unavailable; skipping .qm generation.")
+else()
+  message(WARNING "Qt6 LinguistTools component not found. Translation .qm files will not be generated.")
 endif()
 
 enable_testing()
