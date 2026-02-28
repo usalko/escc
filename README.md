@@ -1,37 +1,37 @@
 # ESC Configurator C++ (`escc`)
 
-`escc` — это новая нативная версия ESC Configurator на C++/Qt.
-Проект создаётся как замена веб-версии, чтобы приложение работало быстрее, стабильнее и без ограничений браузера.
+`escc` is the native C++/Qt version of ESC Configurator.
+It is being built as a replacement for the web version, with a focus on better performance, improved stability, and no browser limitations.
 
-## Для кого это приложение
+## Who this app is for
 
-Если коротко, `escc` нужно пилотам и хоббистам, которые хотят:
+In short, `escc` is for pilots and hobbyists who want to:
 
-- подключаться к полётному контроллеру по serial;
-- читать и менять настройки ESC;
-- прошивать BLHeli_S / Bluejay / AM32;
-- работать с логами, мелодиями старта и базовыми сервисными инструментами.
+- connect to a flight controller over serial;
+- read and update ESC settings;
+- flash BLHeli_S / Bluejay / AM32 firmware;
+- use logs, startup melody tools, and core maintenance features.
 
-## Текущий статус
+## Current status
 
-Проект активно в разработке.
-Основной UI и ключевая логика уже перенесены, но часть задач ещё в работе.
+The project is under active development.
+Core UI and major logic are already migrated, with some tasks still in progress.
 
-## Быстрый старт (Linux)
+## Quick start (Linux)
 
-### 1) Установите зависимости
+### 1) Install dependencies
 
-Нужны как минимум:
+At minimum, you need:
 
 - CMake 3.21+
-- компилятор C++17 (`g++` или `clang++`)
-- Qt 6: `Core`, `Widgets`, `Network`, `SerialPort`, `LinguistTools`
+- a C++17 compiler (`g++` or `clang++`)
+- Qt 6 modules: `Core`, `Widgets`, `Network`, `SerialPort`, `LinguistTools`
 
-`Qt Multimedia` — опционально (для предпрослушивания мелодий).
+`Qt Multimedia` is optional (used for melody preview).
 
-### 2) Сборка
+### 2) Build
 
-Из папки `escc`:
+From the `escc` directory:
 
 ```bash
 mkdir -p build
@@ -40,50 +40,50 @@ cmake ..
 cmake --build . -j$(nproc)
 ```
 
-### 3) Запуск
+### 3) Run
 
 ```bash
 ./escc
 ```
 
-## Проверка тестов
+## Run tests
 
-Из `escc/build`:
+From `escc/build`:
 
 ```bash
 ctest --output-on-failure
 ```
 
-## Переводы (i18n)
+## Translations (i18n)
 
-Приложение поддерживает переключение языка на лету.
+The app supports runtime language switching.
 
-- Исходные JSON-переводы: `../src/translations/<locale>/*.json`
-- Qt `.ts` файлы: `src/i18n/*.ts`
+- Source JSON translations: `../src/translations/<locale>/*.json`
+- Qt `.ts` files: `src/i18n/*.ts`
 
-### Обновить `.ts` из JSON
+### Update `.ts` from JSON
 
-Из корня репозитория:
+From repository root:
 
 ```bash
 python3 escc/scripts/convert-translations-to-ts.py
 ```
 
-### Собрать `.qm`
+### Build `.qm` files
 
-Из `escc/build`:
+From `escc/build`:
 
 ```bash
 cmake --build . --target release_translations
 ```
 
-## Полезно знать
+## Useful notes
 
-- Настройки приложения сохраняются через `QSettings`.
-- Serial-функции зависят от наличия `Qt SerialPort`.
-- Если не установлен `Qt LinguistTools`, приложение соберётся, но генерация `.qm` будет отключена.
+- App settings are stored using `QSettings`.
+- Serial features depend on the `Qt SerialPort` module.
+- If `Qt LinguistTools` is not available, the app still builds, but `.qm` generation is disabled.
 
-## Обратная связь
+## Feedback
 
-Если нашли ошибку или хотите предложить улучшение, используйте Issues в основном репозитории проекта.
+If you find a bug or want to suggest an improvement, please open an issue in the main repository.
 
